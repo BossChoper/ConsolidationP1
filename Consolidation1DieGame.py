@@ -26,7 +26,10 @@ players = []
 #goal to reach to win game for one player
 limit_score = 50
 
-#variable for the odd roll side when comparing them
+#add up total points for turn scoring
+total_points = 0
+
+#variable for the odd roll side when comparing
 odd_die = 0
 
 #variables keep track of player data
@@ -34,6 +37,13 @@ player = []
 player_data = {}
 
 #METHOD LIST ----------------------------------
+def completeRoll(sided_die):
+    side_results
+    #completes a set of rolls for one player
+    for index in range(sided_die):
+        current_roll = random.choice(sided_die)
+        practice_results.append(current_roll)
+        practice_dictionary[current_roll] += 1
 
 #initial roll. Rolls all dies and stores in results list/dictionary
 def practiceDieRoll():
@@ -48,7 +58,7 @@ def practiceDieRoll():
     print(practice_dictionary)
     print(practice_results)
 
-#checking if two rolls are the same
+#checking if two rolls are the same in three
 #finished (could be expanded)
 def checkForTwoRolls():
     if practice_results[0] == practice_results[1] or practice_results[1] == practice_results[2] or practice_results[0] == practice_results[2]:
@@ -85,11 +95,8 @@ print(practice_dictionary)
 print(practice_results)
 
 
-#add up total points for turn scoring
-total_points = 0
-
 #adds all numbers together in current roll results
-#finished
+#needs to be finished
 def addUpPoints():
     for int in practice_results:
         total_points += int
@@ -126,8 +133,8 @@ def highScore():
 
 #changes number of sides to roll
 #finished
-def changeDieSides():
-    sides = int(input("Enter a number: "))
+def changeDieSides(sides):
+    #sides = int(input("Enter a number: "))
     for side in range(1, sides + 1):
         sided_die.append(side)
         add_side = {side: 0}
@@ -137,7 +144,7 @@ def changeDieSides():
     print(sided_die)
     print(sided_die_rolls)
 
-#print each player in the list one by one
+#print each player's name in the list one by one
 #finished
 def printAllPlayers():
     for player in player_data.keys():
@@ -154,10 +161,11 @@ def printAllPlayerInfo():
 #testing: player dictionary
 def testData():
     player_data = {"Player 1": (0, 1, 2),
-               "Player 2": (0, 1, 2)}
+                   "Player 2": (0, 1, 2)}
     player_data["Player 1"]
     player_data.keys()
 
 #Testing: a full program for the game
-print("Hello, welcome to TupledOut. How many players will be playing?")
-playerCount = int(input("Give an integer: "))
+print("Hello, welcome to TupledOut.")
+dieCount = int(input("Give an integer for the die sides: "))
+changeDieSides(dieCount)
