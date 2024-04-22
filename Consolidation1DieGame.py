@@ -33,17 +33,19 @@ total_points = 0
 odd_die = 0
 
 #variables keep track of player data
-player = []
+players = []
 player_data = {}
 
 #METHOD LIST ----------------------------------
 def completeRoll(sided_die):
-    side_results
+    temp_results = []
+    temp_roll_results = {}
     #completes a set of rolls for one player
-    for index in range(sided_die):
+    for index in sided_die:
         current_roll = random.choice(sided_die)
-        practice_results.append(current_roll)
-        practice_dictionary[current_roll] += 1
+        temp_results.append(current_roll)
+        temp_roll_results[current_roll] = 1
+    print(temp_results)
 
 #initial roll. Rolls all dies and stores in results list/dictionary
 def practiceDieRoll():
@@ -133,9 +135,10 @@ def highScore():
 
 #changes number of sides to roll
 #finished
-def changeDieSides(sides):
+def changeDieSides():
+    dieCount = int(input("Give an integer for the die sides: "))
     #sides = int(input("Enter a number: "))
-    for side in range(1, sides + 1):
+    for side in range(1, dieCount + 1):
         sided_die.append(side)
         add_side = {side: 0}
         #adds side to the roll dictionary
@@ -143,6 +146,18 @@ def changeDieSides(sides):
     #both variables should have the same sides
     print(sided_die)
     print(sided_die_rolls)
+    return sided_die, sided_die_rolls
+
+#updates player count.
+def changePlayerCount():
+    playerCount = int(input("Give an integer for player count: "))
+    for player in range(1, playerCount):
+        key = f"Player {player}"
+        players.append(player)
+        player_data[key] = 0
+    print(players)
+    print(player_data)
+    return players, player_data
 
 #print each player's name in the list one by one
 #finished
@@ -167,5 +182,9 @@ def testData():
 
 #Testing: a full program for the game
 print("Hello, welcome to TupledOut.")
-dieCount = int(input("Give an integer for the die sides: "))
-changeDieSides(dieCount)
+#Method to set die sides
+changeDieSides()
+#Method to set player count
+changePlayerCount()
+print("Thank you. Let's start our first rolls.")
+completeRoll(sided_die)
