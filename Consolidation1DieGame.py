@@ -3,7 +3,7 @@ import random
 #In this practice, one player rolls between two numbers
 
 #GLOBAL VARIABLE LIST-----------------------
-
+currentPlayer = 1
 #list to store all rolled numbers.
 practice_results = []
 #dictionary to store results and organize into categories, preferably per player
@@ -37,15 +37,48 @@ players = []
 player_data = {}
 
 #METHOD LIST ----------------------------------
-def completeRoll(sided_die):
+def completeRoll(sides):
+    #each player rolls three times
+    #stores rolls in this list
     temp_results = []
-    temp_roll_results = {}
+    #stores results in this dict
+    temp_roll_results = sided_die_rolls
     #completes a set of rolls for one player
-    for index in sided_die:
+    for index in range(3):
         current_roll = random.choice(sided_die)
         temp_results.append(current_roll)
-        temp_roll_results[current_roll] = 1
+        temp_roll_results[current_roll] += 1
     print(temp_results)
+    print("This is what you rolled.")
+    if isTupledOut(temp_results) == True:
+        print("No points will be added.")
+        return 0
+    else:
+        rerollKeep = int(input("You're safe to reroll or keep points. Enter 1 to reroll, 2 to keep. "))
+        if rerollKeep == 1:
+            rerollOddDie(temp_results)
+            if isTupledOut(temp_results) == True:
+                print("No points will be added.")
+                return 0
+            else:
+                print("Rerolled safely. These are your points gained. ")
+                print(temp_results)
+                addUpPoints(temp_results)
+                toAdd = addUpPoints(temp_results)
+                #needs to be added to player's scorecard
+                #enter exact name of the key
+                player_data[f"Player {currentPlayer}"] += toAdd
+                printAScore(currentPlayer)
+
+        else:
+            print("Kept results. These are your points gained. ")
+            addUpPoints(temp_results)
+            toAdd = addUpPoints(temp_results)
+            #needs to be added to player's scorecard
+            #enter exact name of the key
+            player_data[f"Player {currentPlayer}"] += toAdd
+            # to print out player score print(player_data[f"Player {currentPlayer}"])
+            printAScore(currentPlayer)
 
 #initial roll. Rolls all dies and stores in results list/dictionary
 def practiceDieRoll():
@@ -66,8 +99,9 @@ def checkForTwoRolls():
     if practice_results[0] == practice_results[1] or practice_results[1] == practice_results[2] or practice_results[0] == practice_results[2]:
         print("Two rolls are the same")
 
-#if two rolls are the same, reroll the odd roll
-def whichRollDifferent():
+#rerolling a die based on which die was found to be different
+def rerollOddDie(practice_results):
+    #if two rolls are the same, reroll the odd roll
     if practice_results[0] != practice_results[1] and practice_results[0] != practice_results[2]:
         odd_die = 1 #the first number is the odd one out
     elif practice_results[1] != practice_results[0] and practice_results[1] != practice_results[2]:
@@ -75,8 +109,6 @@ def whichRollDifferent():
     else:
         odd_die = 3 #the third number is the odd one out
 
-#rerolling a die based on which die was found to be different
-def rerollOddDie():
     if odd_die == 1:
         practice_results[0] = random.randint(1,2)
     elif odd_die == 2:
@@ -87,10 +119,14 @@ def rerollOddDie():
 
 #checking if all rolls are the same
 #finished (could be expanded)
-def isTupledOut():
+def isTupledOut(practice_results):
     if practice_results[0] == practice_results[1] and practice_results[0] == practice_results[2]:
             print("All rolls are the same. Tupled out!")
+            return True
+    else:
+        return False
             #take away points, no points will be added
+
 
 #confirmation of final results
 print(practice_dictionary)
@@ -99,10 +135,12 @@ print(practice_results)
 
 #adds all numbers together in current roll results
 #needs to be finished
-def addUpPoints():
+def addUpPoints(practice_results):
+    points = 0
     for int in practice_results:
-        total_points += int
-    print(total_points)
+        points += int
+    print(points)
+    return points
 
 #checks if any players rearched 50 points or game is over five turns
 #needs to be finished
@@ -135,10 +173,9 @@ def highScore():
 
 #changes number of sides to roll
 #finished
-def changeDieSides():
-    dieCount = int(input("Give an integer for the die sides: "))
+def changeDieSides(sides):
     #sides = int(input("Enter a number: "))
-    for side in range(1, dieCount + 1):
+    for side in range(1, sides + 1):
         sided_die.append(side)
         add_side = {side: 0}
         #adds side to the roll dictionary
@@ -149,9 +186,9 @@ def changeDieSides():
     return sided_die, sided_die_rolls
 
 #updates player count.
-def changePlayerCount():
-    playerCount = int(input("Give an integer for player count: "))
-    for player in range(1, playerCount):
+def changePlayerCount(playerCount):
+    
+    for player in range(1, playerCount+1):
         key = f"Player {player}"
         players.append(player)
         player_data[key] = 0
@@ -161,9 +198,9 @@ def changePlayerCount():
 
 #print each player's name in the list one by one
 #finished
-def printAllPlayers():
-    for player in player_data.keys():
-        print(player)
+def printAScore(currentPlayer):
+    score = f"Player {currentPlayer}"
+    print(f"{player_data[score]} is your score.")
 
 #print out each player and their associated items
 #needs to be tested
@@ -183,8 +220,22 @@ def testData():
 #Testing: a full program for the game
 print("Hello, welcome to TupledOut.")
 #Method to set die sides
-changeDieSides()
+sides = int(input("Give an integer for the die sides: "))
+changeDieSides(sides)
+#returned sided_die, sided_die_rolls
 #Method to set player count
-changePlayerCount()
+playerCount = int(input("Give an integer for player count: "))
+changePlayerCount(playerCount)
+#returned players, player_data
 print("Thank you. Let's start our first rolls.")
-completeRoll(sided_die)
+turn += 1
+completeRoll(sides)
+currentPlayer += 1
+print("Nice. Moving to next player! ")
+
+#This is for the end of a turn.
+checkDisplayInterest = int(input("Do you want to see all player scores? Enter 1 for yes, 2 for no: "))
+if checkDisplayInterest == 1:
+    displayScore()
+else:
+    print("Okay, we won't. Continue to next turn.")
