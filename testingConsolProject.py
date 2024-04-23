@@ -1,3 +1,4 @@
+import random
 sided_die = []
 sided_die_rolls = {}
 sides = int(input("Enter a number: "))
@@ -11,23 +12,14 @@ print(sided_die_rolls)
 
 players = []
 players_dict = {}
-playerCount = int(input("Give an integer: "))
-for player in range(1, playerCount):
-    number = player
-    key = f"Player {player}"
-    players.append(player)
-    players_dict[key] = 0
-    #use an f string (print(f" ")) to input players
-    print(f"Player {player}")
-print(players)
-print(players_dict)
+sidesRolled = []
+sidesRolledDict = {}
 
-def changePlayerCount():
-    playerCount = int(input("Give an integer for player count: "))
-    for player in range(1, playerCount):
-        key = f"Player {player}"
-        players.append(player)
-        players_dict[key] = 0
-    print(players)
-    print(players_dict)
-    #use an f string (print(f" ")) to input players
+    #initial roll. Rolls all dies and stores in results list/dictionary
+for index in range(3):
+    current_roll = random.choice(sided_die)
+    #below adds temporary roll results to the list
+    sidesRolled.append(current_roll)
+    #below records the numbers rolled and their frequency
+
+print(sidesRolled)

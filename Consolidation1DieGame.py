@@ -219,23 +219,38 @@ def testData():
 
 #Testing: a full program for the game
 print("Hello, welcome to TupledOut.")
+
 #Method to set die sides
 sides = int(input("Give an integer for the die sides: "))
 changeDieSides(sides)
 #returned sided_die, sided_die_rolls
+
 #Method to set player count
 playerCount = int(input("Give an integer for player count: "))
 changePlayerCount(playerCount)
 #returned players, player_data
-print("Thank you. Let's start our first rolls.")
-turn += 1
-completeRoll(sides)
-currentPlayer += 1
-print("Nice. Moving to next player! ")
 
-#This is for the end of a turn.
-checkDisplayInterest = int(input("Do you want to see all player scores? Enter 1 for yes, 2 for no: "))
-if checkDisplayInterest == 1:
-    displayScore()
-else:
-    print("Okay, we won't. Continue to next turn.")
+#making a while loop to repeat rolls until all players are done.
+while currentPlayer != playerCount + 1:
+    #Beginning first rolls
+    print("Thank you. Let's start our first rolls with Player: " f"{currentPlayer}")
+    turn += 1
+    completeRoll(sides)
+
+    #This is for checking your current score at the end of your turn
+    checkCurrentPoints = int(input("Do you want to see your own current score? Enter 1 for yes, 2 for no: "))
+    if checkCurrentPoints == 1:
+        printAScore(currentPlayer)
+    else:
+        print("Okay, we won't. Continue to next turn.")
+
+    #Move to next player
+    currentPlayer += 1
+    print("Nice. Moving to next player! ")
+
+    #This is for the end of a turn.
+    checkDisplayInterest = int(input("Do you want to see all player scores? Enter 1 for yes, 2 for no: "))
+    if checkDisplayInterest == 1:
+        displayScore()
+    else:
+        print("Okay, we won't. Continue to next turn.")
