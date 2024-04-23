@@ -152,7 +152,7 @@ def isGameOver():
 #finished
 def endFiveTurns():
     #ends game if this is the end of the fifth turn
-    if turn == 6:
+    if turn == 5:
         print("Alright, game is over.")
 
 #shows current score for all players when called
@@ -163,13 +163,14 @@ def displayScore():
          printAllPlayerInfo()
     else:
         print("Okay, keep playing. ")
-    print(practice_results)
 
 #keeps track of who has highest score
 #needs to be finished
-def highScore():
-     if total_points > 1:
-          print(total_points)
+def getHighestScore():
+    highest = max(player_data.values())
+    win_player = max(player_data, key = player_data.get)
+    return highest
+
 
 #changes number of sides to roll
 #finished
@@ -234,27 +235,39 @@ playerCount = int(input("Give an integer for player count: "))
 changePlayerCount(playerCount)
 #returned players, player_data
 
-#making a while loop to repeat rolls until all players are done.
-while currentPlayer != playerCount + 1:
-    #Beginning first rolls
-    print("Thank you. Let's start our first rolls with Player: " f"{currentPlayer}")
-    turn += 1
-    completeRoll(sides)
+#while loop till all turns are reached
+#turn = 0 at beginning, endFiveTurns = 5
+while turn != 5:
+    currentPlayer = 1
+    #making a while loop to repeat rolls until all players are done.
+    while currentPlayer != playerCount + 1:
+        #Beginning first rolls
+        print("Thank you. Let's start our first rolls with Player: " f"{currentPlayer}")
+        turn += 1
+        completeRoll(sides)
 
-    #This is for checking your current score at the end of your turn
-    checkCurrentPoints = int(input("Do you want to see your own current score? Enter 1 for yes, 2 for no: "))
-    if checkCurrentPoints == 1:
-        printAScore(currentPlayer)
-    else:
-        print("Okay, we won't. Continue to next turn.")
+        #This is for checking your current score at the end of your turn
+        checkCurrentPoints = int(input("Do you want to see your own current score? Enter 1 for yes, 2 for no: "))
+        if checkCurrentPoints == 1:
+            printAScore(currentPlayer)
+        else:
+            print("Okay, we won't. Continue to next player.")
 
-    #Move to next player
-    currentPlayer += 1
-    print("Nice. Moving to next player! ")
-
+        #Move to next player
+        currentPlayer += 1
+        print("Nice. Moved to next player! ")
     #This is for the end of a turn.
-    checkDisplayInterest = int(input("Do you want to see all player scores? Enter 1 for yes, 2 for no: "))
-    if checkDisplayInterest == 1:
-        displayScore()
-    else:
-        print("Okay, we won't. Continue to next turn.")
+    displayScore()
+    turn += 1
+    if turn == 4:
+        endFiveTurns()
+        print("The player that won is... ")
+        printAllPlayerInfo()
+        repeatGame = int(input("Do you want to play again? Enter 1 for yes, 2 for no: "))
+        if repeatGame == 1:
+            print("Okay, go again!")
+            print("------ NEW GAME -----")
+            turn == 0
+        else:
+            print("Okay, good game!")
+
