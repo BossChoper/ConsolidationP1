@@ -205,10 +205,14 @@ def printAScore(currentPlayer):
 #print out each player and their associated items
 #needs to be tested
 def printAllPlayerInfo():
-    for player, points in player_data.items():
-        side1Points, side2Points, side3Points = points
-        print(f"{player} got {side1Points} for one side, {side2Points} for second side, {side3Points} for third side")
-        print(player)
+    for player in range(1, playerCount + 1):
+        #side1Points, side2Points, side3Points = points
+        #need to take key and associated item and print them out for each player
+        #print(f"{player} got {side1Points} for one side, {side2Points} for second side, {side3Points} for third side")
+        #print(player)
+        printPlayer = player_data[f"Player {player}"]
+        print(f"{printPlayer} is the appropriate score for Player: {player}")
+    
     
 #testing: player dictionary
 def testData():

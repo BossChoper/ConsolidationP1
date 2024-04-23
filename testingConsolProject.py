@@ -10,16 +10,20 @@ for side in range(1, sides + 1):
 print(sided_die)
 print(sided_die_rolls)
 
-players = []
-players_dict = {}
+players = [1, 2]
+players_dict = {1 : 0, 2 : 0}
 sidesRolled = []
 sidesRolledDict = {}
 
-    #initial roll. Rolls all dies and stores in results list/dictionary
-for index in range(3):
-    current_roll = random.choice(sided_die)
-    #below adds temporary roll results to the list
-    sidesRolled.append(current_roll)
-    #below records the numbers rolled and their frequency
+print(players_dict)
+def printAllPlayerInfo():
+    playerCount = 2
+    for player in range(1, playerCount + 1):
+        #side1Points, side2Points, side3Points = points
+        #need to take key and associated item and print them out for each player
+        #print(f"{player} got {side1Points} for one side, {side2Points} for second side, {side3Points} for third side")
+        #print(player)
+        printPlayer = players_dict[player]
+        print(f"{printPlayer} is the appropriate score for Player: {player}")
 
-print(sidesRolled)
+printAllPlayerInfo()
