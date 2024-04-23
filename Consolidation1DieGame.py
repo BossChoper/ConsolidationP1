@@ -6,12 +6,12 @@ import random
 currentPlayer = 1
 #list to store all rolled numbers.
 practice_results = []
-#dictionary to store results and organize into categories, preferably per player
+#test dictionary to store results and organize into categories, preferably per player
 practice_dictionary = {1: 0, 2 : 0}
-#save all results total
+#test save all results total
 all_practice_results = {1 : 0}
 
-#die for testing is two sided
+#testing die is two sided
 two_sided_die = (1, 2)
 #this is the die the player will set
 sided_die = []
